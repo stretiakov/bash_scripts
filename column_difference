@@ -5,24 +5,16 @@
 
 # downloading and visualizing the file
 wget -q -O array.csv https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/M3/L2/arrays_table.csv 
-#echo "This is what the file looks like:"
-#cat array.csv
-echo
 
 n_col=$(head -1 array.csv | tr ',' ' ' | wc -w) # counting columns
 echo -n "The table has $n_col columns "
 
-# parsing counted columns into separate variables
+# parsing counted columns into separate arrays
 for (( i=0; i<=(($n_col-1)); i++ )); do # do as many times as there are columns
     titled_column=$(cut -d ',' -f$(($i+1)) array.csv) # cutting out columns 
     column_n="column$i" # dynamically generating a variable for each column
     declare "$column_n=$titled_column" # assigning this variable to a column
-done
-
-# converting these variables into arrays
-for (( i=0; i<=(($n_col-1)); i++ )); do # do as many times as there are columns
-    temp_name="column$i" # dynamically generating a variable that stores current column as a string
-    IFS=$'\n' read -r -d '' -a col$i <<< "${!temp_name}" # reading a string into array (delimiter is a new line)
+    IFS=$'\n' read -r -d '' -a col$i <<< "${!column_n}" # reading a string into array (delimiter is a new line)
 done
 
 len=$(echo "${column0[@]}" | grep -c $'\n') #counting lines
@@ -41,7 +33,7 @@ rm output.csv # removing a file from previous iteration
 for (( i=0; i<=(($len-1)); i++ )); do
     for (( j=0; j<=(($n_col-1)); j++ )); do
     temp="col$j"
-    eval "echo -n \"\${$temp[$i]}, \" ">> output.csv # ${col$j[$i]} would not have worked, not ${!temp[$i]}
-    done # before execution eval expands all variables, escape characters (\) preclude literal interpretation
+    eval "echo -n \"\${$temp[$i]}, \" ">> output.csv # ${col$j[$i]} would not have worked, neither ${!temp[$i]} because Bash doesn't support two dymanic variables
+    done # instead, before execution eval expands all variables, and escape characters (\) preclude literal interpretation
     echo ${diff[i]} >> output.csv
 done
