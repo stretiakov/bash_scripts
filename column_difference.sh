@@ -29,7 +29,6 @@ done
 diff[0]=$(echo "column_$n_col: difference")
 
 # compiling the output file: first the lines, then stacking them in columns
-rm output.csv # removing a file from previous iteration
 for (( i=0; i<=(($len-1)); i++ )); do
     for (( j=0; j<=(($n_col-1)); j++ )); do
     temp="col$j"
