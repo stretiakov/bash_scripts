@@ -3,9 +3,9 @@
 # select place
 select place in casablanca amsterdam kiev
 do
-# silently downloading the weather report
-wrep=$(curl -s wttr.in/$place)
-break # without "break" it will be stuck in the select loop
+  # silently downloading the weather report
+  wrep=$(curl -s wttr.in/$place)
+  break # without "break" it will be stuck in the select loop
 done
 
 # exctracting string with temperatures
