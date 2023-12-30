@@ -3,7 +3,7 @@
 
 #/usr/bin/bash
 
-# downloading and visualizing the file
+# downloading the file
 wget -q -O array.csv https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/M3/L2/arrays_table.csv 
 
 n_col=$(head -1 array.csv | tr ',' ' ' | wc -w) # counting columns
