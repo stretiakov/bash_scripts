@@ -33,6 +33,7 @@ for (( i=0; i<=(($len-1)); i++ )); do
     for (( j=0; j<=(($n_col-1)); j++ )); do
     temp="col$j"
     eval "echo -n \"\${$temp[$i]}, \" ">> output.csv # ${col$j[$i]} would not have worked, neither ${!temp[$i]} because Bash doesn't support two dymanic variables
+                                                    # the use of eval is ok here because the input is sanitized, otherwise it's a bad idea
     done # instead, before execution eval expands all variables, and escape characters (\) preclude literal interpretation
     echo ${diff[i]} >> output.csv
 done
